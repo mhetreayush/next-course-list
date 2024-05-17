@@ -4,6 +4,7 @@ import { Button } from "@/components/Button/Button";
 import { db } from "@/lib/firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { faker } from "@faker-js/faker";
+import { useState } from "react";
 export type Student = {
   id: number;
   name: string;
@@ -136,6 +137,15 @@ const addStudentsToDB = async () => {
 };
 
 const Admin = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState("");
+  const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+  if (!isAuthenticated) {
+    const password = prompt("Enter admin password");
+    if (password === adminPassword) {
+      setIsAuthenticated(password);
+    }
+    return <>Please get authenticated</>;
+  }
   return (
     <div>
       <h1>Admin</h1>
